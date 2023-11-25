@@ -1,0 +1,35 @@
+[project]
+name = "bentoml-extensions"
+version = "0.0.1"
+description = ""
+authors = [
+    {name = "kimsoungryoul", email = "kimsoungryoul@gmail.com"},
+]
+dependencies = [
+    "bentoml>=1.1.10",
+    #"intel-extension-for-pytorch>=2.1.0",
+    "orjson>=3.9.10",
+    "pydantic-settings>=2.0.3",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+
+[project.optional-dependencies]
+ipex = [
+    "intel-extension-for-pytorch>=2.1.0",
+]
+featurestore-aerospike = [
+    "aerospike>=14.0.0",
+]
+featurestore-redis = [
+    "redis-om>=0.2.1",
+]
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.3",
+]
