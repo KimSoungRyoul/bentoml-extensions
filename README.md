@@ -1,6 +1,5 @@
-# bentoml-extensions
+# bentoml-extensions [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
 #### A.K.A GukBap
-[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
 
 todo: plan for 2024
 todo: FeatureStore Runner [ODM], optimize cpu inference [ipex, ovms]
