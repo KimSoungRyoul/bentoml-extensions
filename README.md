@@ -55,8 +55,8 @@ async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
 
 
 ## CPU Optimized Runner
-  * bentoml-extensions[ipex]
-  * bentoml-extensions[ovms] `like a bentoml[triton]`
+  * `bentoml-extensions[ipex]`
+  * `bentoml-extensions[ovms]` `like a bentoml[triton]`
 
 
 
