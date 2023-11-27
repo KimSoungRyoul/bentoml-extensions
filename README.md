@@ -1,8 +1,6 @@
 # bentoml-extensions [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
 #### A.K.A GukBap
 
-todo: plan for 2024
-todo: FeatureStore Runner [ODM], optimize cpu inference [ipex, ovms]
 
 
 ## FeatureStore 
@@ -63,3 +61,13 @@ async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
 ## Post(Runtime) Model Compression (oneapi nncl)
   * post quant ?
   * ...
+
+
+
+todo: plan for 2024
+#### todo 
+* FeatureStore Runner [ODM], 
+* optimize cpu inference [ipex, ovms]
+
+
+![스크린샷 2023-11-27 오후 3 18 18](https://github.com/KimSoungRyoul/bentoml-extensions/assets/24240623/8b922a8f-99e6-4d69-a713-a03f3f7b0d27)
