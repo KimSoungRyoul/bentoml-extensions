@@ -42,9 +42,14 @@ svc = bentoml.Service("iris_classifier_svc", runners=[iris_clf_runner])
 @svc.api(input=JSON(), output=JSON())
 async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
   
-  # features: list[IrisFeature] = await repository.async_filter(ids=feature_keys)
-  # features: list[list[float]] = await repository.async_filter(ids=feature_keys,_nokey=True)
-  features: NDArray = await repository.async_filter(ids=feature_keys,_return_np=True)
+  # features: list[IrisFeature] = await repository.filter(ids=feature_keys).aget_many()
+  features: list[list[float]] = await repository.filter(ids=feature_keys, _nokey=True).aget_many() # async_get_many()
+  #features: list[list[float]] = repository.filter(ids=feature_keys, _nokey=True).get_many()
+  # features: IrisFeature = await repository.filter(ids=feature_keys).aget()
+
+
+  
+  features: NDArray = await repository.afilter(ids=feature_keys,_return_np=True)
   inputs: torch.tensor =  torch.from_numpy(features)
   result = await iris_clf_runner.predict.async_run(inputs)
   return { "result": result.tolist() }
@@ -59,6 +64,7 @@ async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
 ## CPU Optimized Runner
   * `bentoml-extensions[ipex]`
   * `bentoml-extensions[ovms]` `like a bentoml[triton]`
+
 
 
 
