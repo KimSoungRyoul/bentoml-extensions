@@ -1,8 +1,9 @@
-# bentoml-extensions [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
+# bentoml-extensions [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org) ![python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 #### A.K.A GukBap
 
 
 #### `todo`:  plan for 2024
+[[Project]bentoml-extensions alpha release ](https://github.com/users/KimSoungRyoul/projects/2)
 * FeatureStore Runner [ODM], 
 * optimize cpu inference [ipex, ovms]
 
