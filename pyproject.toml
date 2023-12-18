@@ -7,9 +7,10 @@ authors = [
 ]
 dependencies = [
     "bentoml>=1.1.10",
-    #"intel-extension-for-pytorch>=2.1.0",
+
     "orjson>=3.9.10",
     "pydantic-settings>=2.0.3",
+
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -17,7 +18,8 @@ license = {text = "Apache-2.0"}
 
 [project.optional-dependencies]
 ipex = [
-    "intel-extension-for-pytorch>=2.1.0",
+    "torch>=1.13.1",
+    "intel-extension-for-pytorch>=1.13.1",
 ]
 featurestore-aerospike = [
     "aerospike>=14.0.0",
@@ -32,4 +34,22 @@ build-backend = "pdm.backend"
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=7.4.3",
+]
+docs = [
+    "sphinx>=5",
+    "myst-parser",
+    "sphinx-click>=3.0.2",
+    "furo",
+    "sphinx-inline-tabs",
+    "sphinxext-opengraph",
+    "sphinxcontrib-fulltoc",
+    "sphinxcontrib-spelling",
+    "sphinx-copybutton",
+    "sphinx-issues",
+    "sphinx-design",
+    "pyenchant",
+    "Jinja2>=3.1",
+    "sphinx-autobuild",
+    "sphinx-hoverxref",
+
 ]
