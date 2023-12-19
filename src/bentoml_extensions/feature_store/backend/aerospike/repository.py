@@ -53,24 +53,21 @@ class AerospikeRepositoryRunnable(t.Generic[R], bentoml.Runnable):
         ...
 
 
-
-
-def to_runner(db_settings: DBSettings,  embedded: bool = False,) -> Runner:
+def to_runner(db_settings: DBSettings, embedded: bool = False) -> Runner:
     return bentoml.Runner(
         AerospikeRepositoryRunnable,
         name="aerospike_repository",
-        embedded= embedded,
+        embedded=embedded,
         runnable_init_params={
             "db_settings": db_settings,
         }
     )
 
 
-
 repository = bentoml.Runner(
-     AerospikeRepositoryRunnable,
-     name="aerospike_repository",
-     runnable_init_params={
-         "model_file": "./saved_model_1.pt",
-     }
- )
+    AerospikeRepositoryRunnable,
+    name="aerospike_repository",
+    runnable_init_params={
+        "model_file": "./saved_model_1.pt",
+    }
+)
