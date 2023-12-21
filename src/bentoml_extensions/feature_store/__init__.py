@@ -1,6 +1,6 @@
-from .backend.aerospike import aerospike
+from .backend.aerospike_backend import aerospike
 
-from .backend.redis import redis
+from .backend import redis
 
 __all__ = [
     aerospike,
