@@ -45,7 +45,7 @@ svc = bentoml.Service("iris_classifier_svc", runners=[iris_clf_runner])
 async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
   
   # features: list[IrisFeature] = await repository.filter(ids=feature_keys).aget_many()
-  features: list[list[float]] = await repository.filter(ids=feature_keys, _nokey=True).aget_many() # async_get_many()
+  features: list[list[float]] = await repository.async_filter(ids=feature_keys, _nokey=True).get_many() # async_get_many()
   #features: list[list[float]] = repository.filter(ids=feature_keys, _nokey=True).get_many()
   # features: IrisFeature = await repository.filter(ids=feature_keys).aget()
 
@@ -65,7 +65,31 @@ async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
   * `bentoml-extensions[ipex]`
   * `bentoml-extensions[ovms]` `like a bentoml[triton]`
 
+~~~Python
+import bentoml
+import bentoml_extensions as bentomlx
 
+
+#iris_clf_runner = bentoml.pytorch.get("iris_clf:latest").to_runner()
+# change like this
+iris_clf_runner = bentomlx.pytorch.get("iris_clf:latest").to_runner(intel_optimize=True)
+xxx_runner = bentomlx.transformers.get("xxx:latest").to_runner(intel_optimize=True)
+xxx_tf_runner = bentomlx.tensorflow.get("xxx:latest").to_runner(intel_optimize=True)
+
+
+# support only in bentoml-extension
+# model type such as pytorch, tensorflow, onnx
+xxx_ov_runner = bentomlx.openvino.get("xxx:latest").to_runner(intel_optimize=True)
+# or
+xxx_ov_runner = bentomlx.pytorch.get("xxx:latest").to_runner(openvino=True, post_quant=True)
+
+# intel bert op
+# https://www.intel.com/content/www/us/en/developer/articles/guide/bert-ai-inference-amx-4th-gen-xeon-scalable.html
+# ?? need discussion about Out of ML serving framework responsibility
+#https://github.com/intel/light-model-transformer/tree/main/BERT
+xxx_ov_runner = bentomlx.experimental.light_model_transformer.bert.get("xxx:latest").to_runner(post_quant=True,quant_dtype=torch.float32)
+
+~~~
 
 
 ## Post(Runtime) Model Compression (oneapi nncl)
