@@ -7,8 +7,7 @@ authors = [
 ]
 dependencies = [
     "bentoml>=1.1.10",
-
-    "orjson>=3.9.10",
+    "orjson>=3.6.9",
     "pydantic-settings>=2.0.3",
 
 ]
