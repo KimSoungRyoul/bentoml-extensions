@@ -1,3 +1,0 @@
-from .settings import DBSettings
-def redis(db_settings: DBSettings) -> "FeatureStore":
-    ...
