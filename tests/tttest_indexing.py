@@ -48,19 +48,19 @@ print(f"intTensor: {int_tensor}")
 
 import numpy as np
 
-arr = np.array([["청바지", "유튜브"],["검색어", "하하하"]])
+arr = np.array([["청바지", "유튜브"], ["검색어", "하하하"]])
 
-#tarr  = torch.from_numpy(arr)
+# tarr  = torch.from_numpy(arr)
 
 print(arr.dtype, arr)
 
-#print(tarr.dtype, tarr)
+# print(tarr.dtype, tarr)
 
 import random
 
 
 async def asdf_co(aa):
-    await asyncio.sleep(random.randint(0,6))
+    await asyncio.sleep(random.randint(0, 6))
     r = "234" + aa
     print(r)
     return r
@@ -74,20 +74,21 @@ async def main():
     task1 = asyncio.create_task(asdf_co("하하"))
     task2 = asyncio.create_task(asdf_co("하하222"))
     task_list = [asyncio.create_task(asdf_co(f"하하{i}")) for i in range(10)]
-    args_list = [f"하하{i}" for i in range(10) ]
+    args_list = [f"하하{i}" for i in range(10)]
     #
     # async for t in task_aiter_asdf("aa"):
     #     print(t)
 
-    print("*"*10)
-    result = await asyncio.gather(*task_list)
-    print("result:",result)
-    print("-"*10)
+    print("*" * 10)
     result = await asyncio.gather(*task_list)
     print("result:", result)
-    print("-"*10)
+    print("-" * 10)
     result = await asyncio.gather(*task_list)
     print("result:", result)
-    print("-"*10)
+    print("-" * 10)
+    result = await asyncio.gather(*task_list)
+    print("result:", result)
+    print("-" * 10)
+
 
 asyncio.run(main())

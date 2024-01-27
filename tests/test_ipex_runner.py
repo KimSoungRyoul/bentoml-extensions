@@ -1,9 +1,7 @@
-from typing import TypedDict, Dict
+from typing import Dict, TypedDict
 
 import bentoml
-import bentoml_extensions as bentomlx
 from bentoml.io import JSON
-
 from pydantic import Field, RedisDsn
 from pydantic_settings import BaseSettings
 
@@ -15,8 +13,7 @@ class IrisFeature(TypedDict, total=False):
     petal_len: float | int
 
 
-
-#iris_clf_runner = bentoml.pytorch.get("iris_clf:latest").to_runner()
+# iris_clf_runner = bentoml.pytorch.get("iris_clf:latest").to_runner()
 # change like this
 iris_clf_runner = bentomlx.pytorch.get("iris_clf:latest").to_runner(intel_optimize=True)
 xxx_runner = bentomlx.transformers.get("xxx:latest").to_runner(intel_optimize=True)
