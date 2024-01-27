@@ -1,5 +1,5 @@
 [project]
-name = "bentoml-extensions"
+name = "bentomlx"
 version = "0.0.1"
 description = ""
 authors = [
@@ -9,7 +9,7 @@ dependencies = [
     "bentoml>=1.1.10",
     "orjson>=3.6.9",
     "pydantic-settings>=2.0.3",
-
+    "async-lru>=2.0.4",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -21,7 +21,7 @@ ipex = [
     "intel-extension-for-pytorch>=1.13.1",
 ]
 featurestore-aerospike = [
-    "aerospike>=14.0.0",
+    "aerospike>=11.0.0",
 ]
 featurestore-redis = [
     "redis-om>=0.2.1",

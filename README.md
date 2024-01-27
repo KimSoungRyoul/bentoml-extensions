@@ -3,59 +3,57 @@
 
 #### `todo`:  plan for 2024
 [[Project]bentoml-extensions alpha release ](https://github.com/users/KimSoungRyoul/projects/2)
-* FeatureStore Runner [ODM], 
+* FeatureStore Runner [ODM],
 * optimize cpu inference [ipex, ovms]
 
 
-## FeatureStore 
+## FeatureStore
 * `pip install bentoml-extensions[featurestore-redis]`
 * `pip install bentoml-extensions[featurestore-aerospike]`
 
 ~~~Python
+import logging
+from typing import Dict, TypedDict
+
 import bentoml
+import numpy as np
 from bentoml.io import JSON
-from pydantic import Field, RedisDsn
-from pydantic_settings import BaseSettings
-
-import bentoml_extensions as bx
-
-from numpy.typing import NDArray
 
 
-class RedisConfig(BaseSettings):
-  redis_dsn: RedisDsn = Field('redis://user:pass@localhost:6379/1')
-
-redisconfig = RedisConfig() 
+import bentomlx
+from bentomlx.feature_repo import DBSettings
 
 
-class IrisFeature(bx.TypedDict, total=False):
-  pk: str
-  sepal_len: float | int
-  sepal_width: float
-  petal_len: float | int
+class IrisFeature(TypedDict, total=False):
+    pk: str
+    sepal_len: float | int
+    sepal_width: float
+    petal_len: float | int
+    petal_width: float
 
 
-repository = bx.featurestore.redis(config=redisconfig, data_model=IrisFeature).to_runner(embedded=True)
+# db_settings = DBSettings(namespace="test", hosts=["127.0.0.1:3000"], use_shared_connection=True)
+db_settings = DBSettings()  # EXPORT ENV BENTOML_REPO_NAMESPACE=test; BENTOML_REPO__HOSTS=localhost:3000; BENTOML_REPO__USE_SHARED_CONNECTION=true
+
+repo_runner = bentomlx.feature_repo.aerospike_fs(db_settings).to_repo_runner(entity_name="iris_features", embedded=True)
+
 iris_clf_runner = bentoml.sklearn.get("iris_clf:latest").to_runner()
 
-svc = bentoml.Service("iris_classifier_svc", runners=[iris_clf_runner])
+svc = bentoml.Service("iris_classifier_svc", runners=[repo_runner, iris_clf_runner])
+
+logger = logging.getLogger("bentoml")
 
 
-@svc.api(input=JSON(), output=JSON())
-async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
-  
-  # features: list[IrisFeature] = await repository.filter(ids=feature_keys).aget_many()
-  features: list[list[float]] = await repository.async_filter(ids=feature_keys, _nokey=True).get_many() # async_get_many()
-  #features: list[list[float]] = repository.filter(ids=feature_keys, _nokey=True).get_many()
-  # features: IrisFeature = await repository.filter(ids=feature_keys).aget()
-
-
-  
-  features: NDArray = await repository.afilter(ids=feature_keys,_return_np=True)
-  inputs: torch.tensor =  torch.from_numpy(features)
-  result = await iris_clf_runner.predict.async_run(inputs)
-  return { "result": result.tolist() }
-  
+@svc.api(
+    input=JSON.from_sample(["pk1", "pk2", "pk3"]),
+    output=JSON(),
+)
+async def classify(feature_keys: list[str]) -> Dict[str, list[int]]:
+    # features: list[list[float]] = await repository.get_many.async_run(pks=feature_keys, _nokey=True) #  [[4.9, 3.0, 1.4, 0.2], [5.1 3.5 1.4 0.3], [5.5 2.5 4.  1.3]]
+    # features: list[IrisFeature] = repo_runner.get_many.run(pks=feature_keys) # input_arr = [{"pk": "pk1": "sepal_len":4.9,  "sepal_width":3.  "petal_len":1.4, "petal_width": 0.2], ... ]
+    features: np.array = repo_runner.get_many.run(pks=feature_keys, _numpy=True) # input_arr = np.array([[4.9, 3.0, 1.4, 0.2], [5.1 3.5 1.4 0.3], [5.5 2.5 4.  1.3]])
+    result: np.ndarray = await iris_clf_runner.predict.async_run(features)
+    return {"result": result.tolist()}
 
 ~~~
 
@@ -67,7 +65,7 @@ async def classify(feature_keys: list[str]) -> Dict[str,list[float]]:
 
 ~~~Python
 import bentoml
-import bentoml_extensions as bentomlx
+import bentomlx
 
 
 #iris_clf_runner = bentoml.pytorch.get("iris_clf:latest").to_runner()
