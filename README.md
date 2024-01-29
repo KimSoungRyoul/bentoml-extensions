@@ -8,8 +8,8 @@
 
 
 ## FeatureStore
-* `pip install bentoml-extensions[featurestore-redis]`
-* `pip install bentoml-extensions[featurestore-aerospike]`
+* `pip install bentomlx[featurestore-redis]`
+* `pip install bentomlx[featurestore-aerospike]`
 
 ~~~Python
 import logging
@@ -60,8 +60,8 @@ async def classify(feature_keys: list[str]) -> Dict[str, list[int]]:
 
 
 ## CPU Optimized Runner
-  * `bentoml-extensions[ipex]`
-  * `bentoml-extensions[ovms]` `like a bentoml[triton]`
+  * `bentomlx[ipex]`
+  * `bentomlx[ovms]` `like a bentoml[triton]`
 
 ~~~Python
 import bentoml
