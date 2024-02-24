@@ -5,6 +5,11 @@ description = ""
 authors = [
     {name = "kimsoungryoul", email = "kimsoungryoul@gmail.com"},
 ]
+package-dir= "src"
+includes = [
+    "bentomlx/"
+]
+
 dependencies = [
     "bentoml>=1.1.10",
     "orjson>=3.6.9",
