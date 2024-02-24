@@ -10,8 +10,8 @@ import aerospike
 import bentoml
 from aerospike_helpers.batch import records as br
 from aerospike_helpers.operations import operations as op
-from feature_repo.backend.base_backend.repository import BaseFeatureRepository
-from feature_repo.settings import DBSettings
+from ..repository import FeatureRepository
+from ...settings import DBSettings
 
 if TYPE_CHECKING:
     from bentoml._internal.runner.runner import Runner, RunnerMethod
@@ -24,7 +24,7 @@ P = t.TypeVar("P", bound=t.Any, covariant=True)  # PK
 R = t.TypeVar("R", bound=dict[str, t.Any] | None, covariant=True)  # Record
 
 
-class AerospikeFeatureRepositoryRunnable(BaseFeatureRepository[P, R], bentoml.Runnable):
+class AerospikeFeatureRepositoryRunnable(FeatureRepository[P, R], bentoml.Runnable):
     SUPPORTED_RESOURCES = ("cpu",)
     SUPPORTS_CPU_MULTI_THREADING = False
 

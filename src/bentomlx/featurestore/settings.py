@@ -13,7 +13,7 @@ class MyCustomSource(EnvSettingsSource):
     def prepare_field_value(
         self, field_name: str, field: FieldInfo, value: Any, value_is_complex: bool
     ) -> Any:
-        if field_name == "HOSTS":
+        if field_name == "HOSTS" and isinstance(value,str):
             return [str(x) for x in value.split(",")]
         return value
 
@@ -26,13 +26,13 @@ class DBSettings(BaseSettings):
     NAMESPACE: str = "test"
     USE_SHARED_CONNECTION: bool = False
 
-    @classmethod
-    def settings_customise_sources(
-        cls,
-        settings_cls: Type[BaseSettings],
-        init_settings: PydanticBaseSettingsSource,
-        env_settings: PydanticBaseSettingsSource,
-        dotenv_settings: PydanticBaseSettingsSource,
-        file_secret_settings: PydanticBaseSettingsSource,
-    ) -> Tuple[PydanticBaseSettingsSource, ...]:
-        return (MyCustomSource(settings_cls),)
+    # @classmethod
+    # def settings_customise_sources(
+    #     cls,
+    #     settings_cls: Type[BaseSettings],
+    #     init_settings: PydanticBaseSettingsSource,
+    #     env_settings: PydanticBaseSettingsSource,
+    #     dotenv_settings: PydanticBaseSettingsSource,
+    #     file_secret_settings: PydanticBaseSettingsSource,
+    # ) -> Tuple[PydanticBaseSettingsSource, ...]:
+    #     return (MyCustomSource(settings_cls),)

@@ -1,0 +1,56 @@
+  apt-get update &&     apt-get install -y --no-install-recommends         software-properties-common         lsb-release         build-essential         ca-certificates         cmake         ninja-build         git         gnupg2         python3         python3-dev         python3-distutils         python3-pip         python-is-python3         wget
+   12  apt-get install -y         protobuf-compiler         libprotobuf-dev         --no-install-recommends
+   13  apt-get install -y         intel-oneapi-tbb         intel-oneapi-mkl         intel-oneapi-mkl-devel         intel-oneapi-tbb-devel         intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
+   14  pip install tensorflow==2.14 intel-extension-for-tensorflow[xpu]==2.14 intel-optimization-for-horovod==0.28.1.1 torch==2.0.1 torchvision==0.15.2 intel_extension_for_pytorch==2.0.100 oneccl-bind-pt==2.0.0 --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/cpu/us/
+   15  pip install tensorflow==2.14 intel-extension-for-tensorflow[cpu]==2.14 intel-optimization-for-horovod==0.28.1.1 torch==2.0.1 torchvision==0.15.2 intel_extension_for_pytorch==2.0.100 oneccl-bind-pt==2.0.0 --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/cpu/us/
+   16  pip install tensorflow==2.14 intel-extension-for-tensorflow[cpu]==2.14 intel-optimization-for-horovod==0.28.1.1 torch==2.0.1+cpu torchvision==0.15.2 intel_extension_for_pytorch==2.0.100 oneccl-bind-pt==2.0.0 --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/cpu/us/
+   17  pip install tensorflow==2.14 intel-extension-for-tensorflow[cpu]==2.14 intel-optimization-for-horovod==0.28.1.1 torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu  torchvision==0.15.2 intel_extension_for_pytorch==2.0.100 oneccl-bind-pt==2.0.0 --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/cpu/us/
+   18  source /opt/intel/oneapi/setvars.sh --force
+   19  pip install numpy pandas tabulate transformers datasets
+   20  git clone https://github.com/intel/light-model-transformer.git
+   21  cd light-model-transformer/
+   22  cd BERT/
+   23  mkdir build
+   24  cd build/
+   25  cmake .. -DBACKENDS="TF;PT"
+   26  cmake .. -DBACKENDS="PT"
+   27  cmake --builde . -j 8
+   28  cmake --build . -j 8
+   29  python -c 'import transformers; transformers.BertModel.from_pretrained("bert-base-uncased")'
+   30  python
+   31  python -c 'import transformers; transformers.BertModel.from_pretrained("bert-base-uncased")'
+   32  cmake --build . -j 8
+   33  which
+   34  ls
+   35  pwd
+   36  cd src/
+   37  ls
+   38  cd pytorch_op/
+   39  ls
+   40  cd ../..
+   41  pwd
+   42  export BERT_OP_PT_LIB=/light-model-transformer/BERT/build/src/pytorch_op/libBertOpPT.so
+   43  which python
+   44  python
+   45  pwd
+   46  PYTHONPATH=/light-model-transformer/BERT/python
+   47  python
+   48  ls
+   49  cd ..
+   50  ls
+   51  python
+   52  cd python/
+   53  ls
+   54  rm -rf bert_op/tensorflow/
+   55  cd ..
+   56  python
+   57  pip uninstalll tensorflow
+   58  pip uninstall tensorflow
+   59  python
+   60  cd tests/pytorch/
+   61  ls
+   62  python benchmark.py -m bert-base-uncased --bert-op --quantization --batch-size=4 --run-time=10
+   63  python benchmark.py -m bert-base-uncased --bert-op --quantization --batch-size=1 --run-time=10
+   64  python benchmark.py -m bert-base-uncased --quantization --batch-size=1 --run-time=10
+   65  python benchmark.py -m bert-base-uncased  --batch-size=1 --run-time=10
+   66  python benchmark.py -m bert-base-uncased --bert-op  --batch-size=1 --run-time=10

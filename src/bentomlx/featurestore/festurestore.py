@@ -3,10 +3,11 @@ import typing as t
 import bentoml
 
 if t.TYPE_CHECKING:
-    from ..feature_repository import DBSettings
+    from ..featurestore import DBSettings
 
 
 class FeatureStore:
+    db_settings: "DBSettings"
 
     def __init__(
         self, db_settings: "DBSettings", runnable_class: t.Type[bentoml.Runnable]
