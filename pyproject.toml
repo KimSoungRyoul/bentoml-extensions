@@ -12,8 +12,8 @@ includes = [
 
 dependencies = [
     "bentoml>=1.1.10",
-    "orjson>=3.6.9",
-    "pydantic-settings>=2.0.3",
+    #"orjson>=3.6.9",
+    "pydantic-settings>=1.10.0",
     "async-lru>=2.0.4",
 ]
 requires-python = ">=3.10"
@@ -22,21 +22,21 @@ license = {text = "Apache-2.0"}
 
 [project.optional-dependencies]
 ipex = [
-    "torch>=1.13.1",
+    "torch<=1.13.1",
     "intel-extension-for-pytorch>=1.13.1",
 ]
-featurestore-aerospike = [
+aerospike = [
     "aerospike>=11.0.0",
 ]
-featurestore-redis = [
-    "redis-om>=0.2.1",
+redis = [
+    "redis[hiredis]>=4.6.0", # "redis"
 ]
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
 
 [tool.pdm.dev-dependencies]
-dev = [
+all = [
+    "bentomlx[ipex,aerospike,redis,unittest,docs]",
+]
+unittest = [
     "pytest>=7.4.3",
 ]
 docs = [
@@ -57,3 +57,32 @@ docs = [
     "sphinx-hoverxref",
 
 ]
+
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+#  $PYPI_USERNAME -P $PYPI_PASSWORD
+
+[tool.pdm.resolution]
+respect-source-order = true
+
+[[tool.pdm.source]]
+name = "intel-python"
+url = "https://pypi.anaconda.org/intel/simple/"
+include_packages = ["numpy"]
+
+
+
+[[tool.pdm.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+include_packages = ["torch"]
+
+
+[[tool.pdm.source]]
+name = "intel-pytorch-extension"
+url = "https://pytorch-extension.intel.com/release-whl/stable/cpu/us/"
+include_packages = ["intel-extension-for-pytorch"]

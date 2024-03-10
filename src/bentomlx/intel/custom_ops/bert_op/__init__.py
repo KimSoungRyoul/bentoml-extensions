@@ -4,6 +4,7 @@
 
 import transformers
 
-
 if transformers.is_torch_available():
     from . import torch
+
+    print("inner torch is imported")
