@@ -1,15 +1,19 @@
 # bentoml-extensions [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org) ![python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 
+require `bentoml higher 1.2.0`
+
+
 #### `todo`:  plan for 2024
+#### todo: need to fix architecture with bentoml>=1.2.0
 [[Project]bentoml-extensions alpha release ](https://github.com/users/KimSoungRyoul/projects/2)
-* FeatureStore Runner [ODM],
+* FeatureStore Service [redis, aerospike, elasticsearch],
 * optimize cpu inference [ipex, ovms]
 
 
 ## QuickStart
 
 ~~~shell
-pip install bentoml bentomlx
+pip install "bentoml>=1.2.0" bentomlx
 ~~~
 
 todo ...
@@ -17,8 +21,8 @@ todo ...
 
 
 ## FeatureStore
-* `pip install bentomlx[featurestore-redis]`
-* `pip install bentomlx[featurestore-aerospike]`
+* `pip install bentomlx[redis]`
+* `pip install bentomlx[aerospike]`
 
 ~~~Python
 import logging
