@@ -3,6 +3,13 @@
 #### plan: release bentomlx 0.1.0  2024.05
 #### support bentoml 1.1.x (Runner) & bentoml 1.2.x (Distributed Service) 
 
+
+### [Documentation](https://kimsoungryoul.github.io/bentoml-extensions/)
+* https://kimsoungryoul.github.io/bentoml-extensions/
+
+
+
+### Features
 * FeatureStore Runner InnerService [redis, aerospike, elasticsearch],
 * optimized cpu inference [ipex, ovms]
 
