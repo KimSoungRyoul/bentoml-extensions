@@ -37,17 +37,11 @@ docker:
 
 ### FeatureStore Runner (bentoml<=1.1.x)
 
-~~~
-aerospike_fs_runner = bentomlx.featurestore.aerospike_runner(db_settings).to_runner(embedded=True)
-redis_fs_runner = bentomlx.featurestore.redis_runner(db_settings).to_runner(embedded=True)
-~~~
+...
 
 ### FeatureStore Inner(Distributed)Service (bentoml>=1.2.0)
 
-~~~
-aerospike_fs = bentomlx.featurestore.aerospike(db_settings).to_runner(embedded=True)
-redis_fs = bentomlx.featurestore.redis(db_settings).to_runner(embedded=True)
-~~~
+...
 
 
 
