@@ -1,0 +1,26 @@
+name: "infra"
+
+
+services:
+  aerospike:
+    image: aerospike:ce-6.1.0.3
+    container_name: aerospike-standalone
+    platform: "linux/amd64" # if apple silicon mac
+    ports:
+      - "3000-3002:3000-3002"
+
+  redis:
+    container_name: redis-standalone
+    image: redis:7.2
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:5.0.15
+    container_name: mongodb-standalone
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+

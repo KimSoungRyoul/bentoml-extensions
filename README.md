@@ -6,7 +6,7 @@ require `bentoml higher 1.2.0`
 #### `todo`:  plan for 2024
 #### todo: need to fix architecture with bentoml>=1.2.0
 [[Project]bentoml-extensions alpha release ](https://github.com/users/KimSoungRyoul/projects/2)
-* FeatureStore Service [redis, aerospike, elasticsearch],
+* FeatureStore Runner InnerService [redis, aerospike, elasticsearch],
 * optimize cpu inference [ipex, ovms]
 
 
@@ -48,7 +48,7 @@ class IrisFeature(TypedDict, total=False):
 # db_settings = DBSettings(namespace="test", hosts=["127.0.0.1:3000"], use_shared_connection=True)
 db_settings = DBSettings()  # EXPORT ENV BENTOML_REPO_NAMESPACE=test; BENTOML_REPO__HOSTS=localhost:3000; BENTOML_REPO__USE_SHARED_CONNECTION=true
 
-repo_runner = bentomlx.feature_repo.aerospike_fs(db_settings).to_repo_runner(entity_name="iris_features", embedded=True)
+repo_runner = bentomlx.featurestore.aerospike(db_settings).to_runner(entity_name="iris_features", embedded=True)
 
 iris_clf_runner = bentoml.sklearn.get("iris_clf:latest").to_runner()
 
@@ -68,6 +68,20 @@ async def classify(feature_keys: list[str]) -> Dict[str, list[int]]:
     result: np.ndarray = await iris_clf_runner.predict.async_run(features)
     return {"result": result.tolist()}
 
+~~~
+
+### FeatureStore Runner (bentoml<1.2.0)
+
+~~~
+aerospike_fs_runner = bentomlx.featurestore.aerospike_runner(db_settings).to_runner(embedded=True)
+redis_fs_runner = bentomlx.featurestore.redis_runner(db_settings).to_runner(embedded=True)
+~~~
+
+### FeatureStore Inner(Distributed)Service (bentoml>=1.2.0)
+
+~~~
+aerospike_fs = bentomlx.featurestore.aerospike(db_settings).to_runner(embedded=True)
+redis_fs = bentomlx.featurestore.redis(db_settings).to_runner(embedded=True)
 ~~~
 
 

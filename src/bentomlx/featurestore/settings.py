@@ -1,10 +1,9 @@
-from typing import Any, List, Optional, Tuple, Type
+from typing import Any, List, Optional
 
 from pydantic.fields import FieldInfo
 from pydantic_settings import (
     BaseSettings,
     EnvSettingsSource,
-    PydanticBaseSettingsSource,
     SettingsConfigDict,
 )
 

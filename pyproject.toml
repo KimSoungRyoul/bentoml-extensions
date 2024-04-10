@@ -72,7 +72,7 @@ respect-source-order = true
 [[tool.pdm.source]]
 name = "intel-python"
 url = "https://pypi.anaconda.org/intel/simple/"
-include_packages = ["numpy"]
+#include_packages = ["numpy"]
 
 
 

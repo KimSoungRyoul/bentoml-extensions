@@ -9,43 +9,31 @@ This section provides a variety of example projects for you to learn how BentoML
     :margin: 0
     :padding: 3 4 0 0
 
-    .. grid-item-card:: :doc:`/use-cases/large-language-models/index`
-        :link: /use-cases/large-language-models/index
+    .. grid-item-card:: :doc:`/use-cases/intel-optimized-runner`
+        :link: /use-cases/intel-optimized-runner
         :link-type: doc
 
-        Deploy LLM applications with BentoML.
+        intel optimized runner : OneAPI
 
-    .. grid-item-card:: :doc:`/use-cases/diffusion-models/index`
-        :link: /use-cases/diffusion-models/index
+    .. grid-item-card:: :doc:`/use-cases/online-featurestore`
+        :link: /use-cases/online-featurestore
         :link-type: doc
 
-        Deploy diffusion models with BentoML.
+        online featurestore
 
-    .. grid-item-card:: :doc:`/use-cases/embeddings/index`
-        :link: /use-cases/embeddings/index
+    .. grid-item-card:: :doc:`/use-cases/offline-inference`
+        :link: /use-cases/offline-inference
         :link-type: doc
 
-        Deploy embedding applications with BentoML.
+        offline inference : FeatureRepository
 
-    .. grid-item-card:: :doc:`/use-cases/audio/index`
-        :link: /use-cases/audio/index
-        :link-type: doc
 
-        Deploy audio applications with BentoML.
-
-    .. grid-item-card:: :doc:`/use-cases/blip`
-        :link: /use-cases/blip
-        :link-type: doc
-
-        Deploy a BLIP (Bootstrapping Language Image Pre-training) application with BentoML.
 
 .. toctree::
     :maxdepth: 1
     :titlesonly:
     :hidden:
 
-    large-language-models/index
-    diffusion-models/index
-    embeddings/index
-    audio/index
-    blip
+    intel-optimized-runner
+    online-featurestore
+    offline-inference

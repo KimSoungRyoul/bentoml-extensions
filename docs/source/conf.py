@@ -4,10 +4,10 @@ from datetime import datetime
 # -- Project information -----------------------------------------------------
 
 project = "BentoML-Extensions"
-copyright = f"2022-{datetime.now().year}, bentoml.com"
-author = "bentoml.com"
+copyright = f"2022-{datetime.now().year}, kimsoungryoul"
+author = "kimsoungryoul"
 
-version = importlib.metadata.version("bentoml")
+version = importlib.metadata.version("bentomlx")
 
 # -- General configuration ---------------------------------------------------
 
@@ -89,10 +89,10 @@ autosectionlabel_maxdepth = 10
 
 ogp_site_url = "http://docs.bentoml.com"
 ogp_image = "https://docs.bentoml.com/en/latest/_static/img/bentoml-banner.jpg"
-ogp_site_name = "BentoML Documentation"
+ogp_site_name = "bentomlx Documentation"
 ogp_use_first_image = True
 
-issues_default_group_project = "bentoml/bentoml"
+issues_default_group_project = "kimsoungryoul/bentoml-extensions"
 
 todo_include_todos = True
 
@@ -116,8 +116,8 @@ copybutton_selector = "div:not(.no-copybutton) > div.highlight > pre"
 html_theme = "furo"
 html_theme_options = {
     "light_css_variables": {
-        "color-brand-primary": "#44a4c6 ",
-        "color-brand-content": "#44a4c6 ",
+        "color-brand-primary": "#78c644 ",
+        "color-brand-content": "#78c644 ",
     },
     "dark_css_variables": {
         "color-brand-primary": "#c9378a ",
@@ -156,7 +156,7 @@ html_theme_options = {
     "dark_logo": "img/logo-dark.svg",
 }
 
-html_title = "BentoML"
+html_title = "bentomlx"
 html_static_path = ["_static"]
 html_css_files = [
     "css/custom.css",
