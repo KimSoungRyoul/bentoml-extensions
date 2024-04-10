@@ -1,76 +1,41 @@
 # bentoml-extensions [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org) ![python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 
-require `bentoml higher 1.2.0`
+#### plan: release bentomlx 0.1.0  2024.05
+#### support bentoml 1.1.x (Runner) & bentoml 1.2.x (Distributed Service) 
 
-
-#### `todo`:  plan for 2024
-#### todo: need to fix architecture with bentoml>=1.2.0
-[[Project]bentoml-extensions alpha release ](https://github.com/users/KimSoungRyoul/projects/2)
 * FeatureStore Runner InnerService [redis, aerospike, elasticsearch],
-* optimize cpu inference [ipex, ovms]
+* optimized cpu inference [ipex, ovms]
 
 
 ## QuickStart
 
 ~~~shell
-pip install "bentoml>=1.2.0" bentomlx
+pip install "bentomlx[redis]"
+pip install "bentomlx[aerospike]"
+pip install "intel-extension-for-pytorch bentomlx"
+
 ~~~
 
 todo ...
 
+~~~
+bentomlx build -f bentofile.yaml
+~~~
 
-
-## FeatureStore
-* `pip install bentomlx[redis]`
-* `pip install bentomlx[aerospike]`
-
-~~~Python
-import logging
-from typing import Dict, TypedDict
-
-import bentoml
-import numpy as np
-from bentoml.io import JSON
-
-
-import bentomlx
-from bentomlx.feature_repo import DBSettings
-
-
-class IrisFeature(TypedDict, total=False):
-    pk: str
-    sepal_len: float | int
-    sepal_width: float
-    petal_len: float | int
-    petal_width: float
-
-
-# db_settings = DBSettings(namespace="test", hosts=["127.0.0.1:3000"], use_shared_connection=True)
-db_settings = DBSettings()  # EXPORT ENV BENTOML_REPO_NAMESPACE=test; BENTOML_REPO__HOSTS=localhost:3000; BENTOML_REPO__USE_SHARED_CONNECTION=true
-
-repo_runner = bentomlx.featurestore.aerospike(db_settings).to_runner(entity_name="iris_features", embedded=True)
-
-iris_clf_runner = bentoml.sklearn.get("iris_clf:latest").to_runner()
-
-svc = bentoml.Service("iris_classifier_svc", runners=[repo_runner, iris_clf_runner])
-
-logger = logging.getLogger("bentoml")
-
-
-@svc.api(
-    input=JSON.from_sample(["pk1", "pk2", "pk3"]),
-    output=JSON(),
-)
-async def classify(feature_keys: list[str]) -> Dict[str, list[int]]:
-    # features: list[list[float]] = await repository.get_many.async_run(pks=feature_keys, _nokey=True) #  [[4.9, 3.0, 1.4, 0.2], [5.1 3.5 1.4 0.3], [5.5 2.5 4.  1.3]]
-    # features: list[IrisFeature] = repo_runner.get_many.run(pks=feature_keys) # input_arr = [{"pk": "pk1": "sepal_len":4.9,  "sepal_width":3.  "petal_len":1.4, "petal_width": 0.2], ... ]
-    features: np.array = repo_runner.get_many.run(pks=feature_keys, _numpy=True) # input_arr = np.array([[4.9, 3.0, 1.4, 0.2], [5.1 3.5 1.4 0.3], [5.5 2.5 4.  1.3]])
-    result: np.ndarray = await iris_clf_runner.predict.async_run(features)
-    return {"result": result.tolist()}
+~~~yaml
+# bentofile.yaml
+docker:
+    distro: debian
+    python_version: "3.8.12"
+    oneapi_version: xxx # <-- need to support of the BentoML, to read bentofile.yaml and override bentoml build command
+    #cuda_version: "11.6.2"
+    system_packages:
+      - ...
 
 ~~~
 
-### FeatureStore Runner (bentoml<1.2.0)
+
+### FeatureStore Runner (bentoml<=1.1.x)
 
 ~~~
 aerospike_fs_runner = bentomlx.featurestore.aerospike_runner(db_settings).to_runner(embedded=True)
@@ -89,32 +54,6 @@ redis_fs = bentomlx.featurestore.redis(db_settings).to_runner(embedded=True)
 ## CPU Optimized Runner
   * `bentomlx[ipex]`
   * `bentomlx[ovms]` `like a bentoml[triton]`
-
-~~~Python
-import bentoml
-import bentomlx
-
-
-#iris_clf_runner = bentoml.ipex.get("iris_clf:latest").to_runner()
-# change like this
-iris_clf_runner = bentomlx.pytorch.get("iris_clf:latest").to_runner(intel_optimize=True)
-xxx_runner = bentomlx.transformers.get("xxx:latest").to_runner(intel_optimize=True)
-xxx_tf_runner = bentomlx.tensorflow.get("xxx:latest").to_runner(intel_optimize=True)
-
-
-# support only in bentoml-extension
-# model type such as ipex, tensorflow, onnx
-xxx_ov_runner = bentomlx.openvino.get("xxx:latest").to_runner(intel_optimize=True)
-# or
-xxx_ov_runner = bentomlx.pytorch.get("xxx:latest").to_runner(openvino=True, post_quant=True)
-
-# intel bert op
-# https://www.intel.com/content/www/us/en/developer/articles/guide/bert-ai-inference-amx-4th-gen-xeon-scalable.html
-# ?? need discussion about Out of ML serving framework responsibility
-#https://github.com/intel/light-model-transformer/tree/main/BERT
-xxx_ov_runner = bentomlx.experimental.light_model_transformer.bert.get("xxx:latest").to_runner(post_quant=True,quant_dtype=torch.float32)
-
-~~~
 
 
 ## Post(Runtime) Model Compression (oneapi nncl)
