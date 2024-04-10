@@ -1,7 +1,3 @@
-from . import featurestore
-from . import intel
+from . import featurestore, intel
 
-__all__ = [
-    featurestore,
-    intel
-]
+__all__ = [featurestore, intel]
