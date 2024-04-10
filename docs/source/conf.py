@@ -4,7 +4,7 @@ from datetime import datetime
 # -- Project information -----------------------------------------------------
 
 project = "BentoML-Extensions"
-copyright = f"2022-{datetime.now().year}, kimsoungryoul"
+copyright = f"2024-{datetime.now().year}, kimsoungryoul"
 author = "kimsoungryoul"
 
 version = importlib.metadata.version("bentomlx")
