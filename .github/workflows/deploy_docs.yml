@@ -31,7 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/upload-artifact@v1
+#      - uses: actions/upload-artifact@v1
+#        with:
+#          name: DocumentationHTML
+#          path: docs/build/html/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
         with:
-          name: DocumentationHTML
-          path: docs/build/html/
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build/html
