@@ -1,0 +1,497 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NLGDMK5');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Quickstart" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://docs.bentoml.com/get-started/quickstart.html" />
+<meta property="og:site_name" content="bentomlx Documentation" />
+<meta property="og:description" content="This quickstart demonstrates how to build a text summarization application with a Transformer model sshleifer/distilbart-cnn-12-6 from the Hugging Face Model Hub. It helps you become familiar with ..." />
+<meta property="og:image" content="http://docs.bentoml.com/_images/service-ui.png" />
+<meta property="og:image:alt" content="bentomlx Documentation" />
+<meta name="description" content="This quickstart demonstrates how to build a text summarization application with a Transformer model sshleifer/distilbart-cnn-12-6 from the Hugging Face Model Hub. It helps you become familiar with ..." />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Use cases" href="../use-cases/index.html" /><link rel="prev" title="Installation" href="installation.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon-32x32.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+<script>
+window.Papercups = {
+    config: {
+        // Pass in your Papercups account token here after signing up
+        accountId: '25ad5fd9-293b-4e0f-9601-5b0cd7846b48',
+        token: '25ad5fd9-293b-4e0f-9601-5b0cd7846b48',
+        inbox: 'ac3ebd50-fc10-4299-9a1c-496841b49a6f',
+        title: 'Welcome to BentoML!',
+        subtitle: 'Ask us anything in the chat window below 😊',
+        // newMessagePlaceholder: 'Start typing...',
+        primaryColor: '#47AFD1',
+        // Optionally pass in a default greeting
+        greeting: "Hi there! How can I help you? If we couldn't get back to you in " +
+                "time, feel free to join our community on slack and post your " +
+                "question in the #support channel: https://l.bentoml.com/join-slack",
+        // Optionally pass in metadata to identify the customer
+        // customer: {
+        //   name: 'Test User',
+        //   email: 'test@test.com',
+        //   external_id: '123',
+        //   metadata: {version: 1, plan: 'premium'}, // Custom fields go here
+        // },
+        // Optionally specify the base URL
+        baseUrl: 'https://yatai-community-papercups.herokuapp.com',
+        // Add this if you want to require the customer to enter
+        // their email before being able to send you a message
+        requireEmailUpfront: true,
+        // Add this if you want to indicate when you/your agents
+        // are online or offline to your customers
+        showAgentAvailability: true,
+    },
+};
+</script>
+<script
+  type="text/javascript"
+  async
+  defer
+  src="https://app.papercups.io/widget.js"
+></script>
+
+        <title>Quickstart - bentomlx</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=c824535d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=94a7ff06" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #3f3f3f;
+  --color-code-foreground: #dcdccc;
+  --color-brand-primary: #78c644 ;
+  --color-brand-content: #78c644 ;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #c9378a ;
+  --color-brand-content: #c9378a ;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #c9378a ;
+  --color-brand-content: #c9378a ;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NLGDMK5"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">bentomlx</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/img/logo-light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/img/logo-dark.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">bentomlx</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">bentomlx</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Get started</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Get started</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Quickstart</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../use-cases/index.html">Use cases</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Use cases</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../use-cases/online-featurestore.html">online FeatureStore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../use-cases/offline-inference.html">Offline Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/feature-store.html">Feature Store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/intel-optimized-inter-service.html">intel-optimized-inter-service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/intel-optimized-build.html">intel-optimized-build</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/bentoml/BentoML/tree/main/examples">Examples</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/bentoml/bentoml/edit/main/docs/source/get-started/quickstart.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">#</a></h1>
+<p>This quickstart demonstrates how to build a text summarization application with a Transformer model <a class="reference external" href="https://huggingface.co/sshleifer/distilbart-cnn-12-6">sshleifer/distilbart-cnn-12-6</a> from the Hugging Face Model Hub. It helps you become familiar with the BentoML workflow and gain a basic understanding of the model serving lifecycle in BentoML. Specifically, you will do the following in this tutorial:</p>
+<ul class="simple">
+<li><p>Set up the BentoML environment</p></li>
+<li><p>Create a BentoML Service</p></li>
+<li><p>Serve the model locally</p></li>
+</ul>
+<p>You can find all the project files in the <a class="reference external" href="https://github.com/bentoml/quickstart">quickstart</a> GitHub repository.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Python 3.8+ and <code class="docutils literal notranslate"><span class="pre">pip</span></code> installed. See the <a class="reference external" href="https://www.python.org/downloads/">Python downloads page</a> to learn more.</p></li>
+<li><p>(Optional) We recommend you create a virtual environment for dependency isolation. See the <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">Conda documentation</a> or the <a class="reference external" href="https://docs.python.org/3/library/venv.html">Python documentation</a> for details.</p></li>
+</ul>
+</section>
+<section id="install-dependencies">
+<h2>Install dependencies<a class="headerlink" href="#install-dependencies" title="Link to this heading">#</a></h2>
+<p>Run the following command to clone the repository and install the required dependencies.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/bentoml/quickstart.git
+<span class="nb">cd</span><span class="w"> </span>quickstart
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="create-a-bentoml-service">
+<h2>Create a BentoML Service<a class="headerlink" href="#create-a-bentoml-service" title="Link to this heading">#</a></h2>
+<p>You can define the serving logic of the model in a <code class="docutils literal notranslate"><span class="pre">service.py</span></code> file by creating a BentoML Service. Here is the example file in this project:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><cite>service.py</cite></span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span> <span class="nn">bentoml</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+
+
+<span class="n">EXAMPLE_INPUT</span> <span class="o">=</span> <span class="s2">&quot;Breaking News: In an astonishing turn of events, the small town of Willow Creek has been taken by storm as local resident Jerry Thompson&#39;s cat, Whiskers, performed what witnesses are calling a &#39;miraculous and gravity-defying leap.&#39; Eyewitnesses report that Whiskers, an otherwise unremarkable tabby cat, jumped a record-breaking 20 feet into the air to catch a fly. The event, which took place in Thompson&#39;s backyard, is now being investigated by scientists for potential breaches in the laws of physics. Local authorities are considering a town festival to celebrate what is being hailed as &#39;The Leap of the Century.&quot;</span>
+
+
+<span class="nd">@bentoml</span><span class="o">.</span><span class="n">service</span><span class="p">(</span>
+    <span class="n">resources</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cpu&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">},</span>
+    <span class="n">traffic</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="k">class</span> <span class="nc">Summarization</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s1">&#39;summarization&#39;</span><span class="p">)</span>
+
+    <span class="nd">@bentoml</span><span class="o">.</span><span class="n">api</span>
+    <span class="k">def</span> <span class="nf">summarize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">EXAMPLE_INPUT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;summary_text&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>In BentoML, a <span class="xref std std-doc">Service</span> is a deployable and scalable unit, defined as a Python class with the <code class="docutils literal notranslate"><span class="pre">&#64;bentoml.service</span></code> decorator. It can manage states and their lifecycle, and expose one or multiple APIs accessible through HTTP. Each API within the Service is defined using the <code class="docutils literal notranslate"><span class="pre">&#64;bentoml.api</span></code> decorator, specifying it as a Python function.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">Summarization</span></code> class, the Service retrieves a pre-trained model (<code class="docutils literal notranslate"><span class="pre">sshleifer/distilbart-cnn-12-6</span></code>) from the Hugging Face hub and initializes a pipeline for text summarization. The <code class="docutils literal notranslate"><span class="pre">summarize</span></code> method serves as the API endpoint. In this example, it accepts a string input with a sample provided, processes it through the pipeline, and returns the summarized text.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">bentoml</span> <span class="pre">serve</span> <span class="pre">service:&lt;service_class_name&gt;</span></code> in your project directory to start the BentoML server.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>bentoml<span class="w"> </span>serve<span class="w"> </span>service:Summarization
+
+<span class="m">2024</span>-02-02T07:16:14+0000<span class="w"> </span><span class="o">[</span>WARNING<span class="o">]</span><span class="w"> </span><span class="o">[</span>cli<span class="o">]</span><span class="w"> </span>Converting<span class="w"> </span><span class="s1">&#39;Summarization&#39;</span><span class="w"> </span>to<span class="w"> </span>lowercase:<span class="w"> </span><span class="s1">&#39;summarization&#39;</span>.
+<span class="m">2024</span>-02-02T07:16:15+0000<span class="w"> </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span>cli<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>production<span class="w"> </span>HTTP<span class="w"> </span>BentoServer<span class="w"> </span>from<span class="w"> </span><span class="s2">&quot;service:Summarization&quot;</span><span class="w"> </span>listening<span class="w"> </span>on<span class="w"> </span>http://localhost:3000<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
+</pre></div>
+</div>
+<p>The server is active at <a class="reference external" href="http://localhost:3000">http://localhost:3000</a>. You can interact with it in different ways.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-0">
+CURL</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s1">&#39;http://localhost:3000/summarize&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s1">&#39;accept: text/plain&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;text&quot;: &quot;Breaking News: In an astonishing turn of events, the small town of Willow Creek has been taken by storm as local resident Jerry Thompson&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;s cat, Whiskers, performed what witnesses are calling a &#39;</span><span class="se">\&#39;</span><span class="s1">&#39;miraculous and gravity-defying leap.&#39;</span><span class="se">\&#39;</span><span class="s1">&#39; Eyewitnesses report that Whiskers, an otherwise unremarkable tabby cat, jumped a record-breaking 20 feet into the air to catch a fly. The event, which took place in Thompson&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;s backyard, is now being investigated by scientists for potential breaches in the laws of physics. Local authorities are considering a town festival to celebrate what is being hailed as &#39;</span><span class="se">\&#39;</span><span class="s1">&#39;The Leap of the Century.&quot;</span>
+<span class="s1">    }&#39;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+BentoML client</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bentoml</span>
+
+<span class="k">with</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">SyncHTTPClient</span><span class="p">(</span><span class="s2">&quot;http://localhost:3000&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Breaking News: In an astonishing turn of events, the small town of Willow Creek has been taken by storm as local resident Jerry Thompson&#39;s cat, Whiskers, performed what witnesses are calling a &#39;miraculous and gravity-defying leap.&#39; Eyewitnesses report that Whiskers, an otherwise unremarkable tabby cat, jumped a record-breaking 20 feet into the air to catch a fly. The event, which took place in Thompson&#39;s backyard, is now being investigated by scientists for potential breaches in the laws of physics. Local authorities are considering a town festival to celebrate what is being hailed as &#39;The Leap of the Century.&#39;&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-2">
+Swagger UI</label><div class="sd-tab-content docutils">
+<p>Visit <a class="reference external" href="http://localhost:3000/">http://localhost:3000</a>, scroll down to <strong>Service APIs</strong>, and click <strong>Try it out</strong>. In the <strong>Request body</strong> box, enter your prompt and click <strong>Execute</strong>.</p>
+<img alt="../_images/service-ui.png" src="../_images/service-ui.png" />
+</div>
+</div>
+<p>Expected output:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Whiskers,<span class="w"> </span>an<span class="w"> </span>otherwise<span class="w"> </span>unremarkable<span class="w"> </span>tabby<span class="w"> </span>cat,<span class="w"> </span>jumped<span class="w"> </span>a<span class="w"> </span>record-breaking<span class="w"> </span><span class="m">20</span><span class="w"> </span>feet<span class="w"> </span>into<span class="w"> </span>the<span class="w"> </span>air<span class="w"> </span>to<span class="w"> </span>catch<span class="w"> </span>a<span class="w"> </span>fly<span class="w"> </span>.<span class="w"> </span>The<span class="w"> </span>event<span class="w"> </span>is<span class="w"> </span>now<span class="w"> </span>being<span class="w"> </span>investigated<span class="w"> </span>by<span class="w"> </span>scientists<span class="w"> </span><span class="k">for</span><span class="w"> </span>potential<span class="w"> </span>breaches<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>laws<span class="w"> </span>of<span class="w"> </span>physics<span class="w"> </span>.<span class="w"> </span>Local<span class="w"> </span>authorities<span class="w"> </span>considering<span class="w"> </span>a<span class="w"> </span>town<span class="w"> </span>festival<span class="w"> </span>to<span class="w"> </span>celebrate<span class="w"> </span>what<span class="w"> </span>is<span class="w"> </span>being<span class="w"> </span>hailed<span class="w"> </span>as<span class="w"> </span><span class="s1">&#39;The Leap of the Century&#39;</span>
+</pre></div>
+</div>
+<p>Once the Service is ready, you can deploy this <span class="xref std std-doc">BentoML project on BentoCloud</span> or <span class="xref std std-doc">create a Docker image</span> for it and ship it anywhere.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../use-cases/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Use cases</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="installation.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Installation</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, kimsoungryoul
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fab fa-github" href="https://github.com/bentoml" aria-label="GitHub">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-linkedin" href="https://www.linkedin.com/company/bentoml/" aria-label="LinkedIn">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-twitter" href="https://twitter.com/bentomlai" aria-label="Twitter">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-slack" href="https://l.bentoml.com/join-slack" aria-label="Slack">&nbsp;&nbsp;</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#install-dependencies">Install dependencies</a></li>
+<li><a class="reference internal" href="#create-a-bentoml-service">Create a BentoML Service</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f42a5055"></script>
+    <script src="../_static/tabs.js?v=3ee01567"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/custom.js?v=d02a1360"></script>
+    </body>
+</html>

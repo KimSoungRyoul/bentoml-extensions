@@ -1,0 +1,609 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NLGDMK5');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="intel-optimized-inter-service" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://docs.bentoml.com/guides/intel-optimized-inter-service.html" />
+<meta property="og:site_name" content="bentomlx Documentation" />
+<meta property="og:description" content="… Single and distributed Services: Using a single BentoML Service in service.py is typically sufficient for most use cases. This approach is straightforward, easy to manage, and works well when you..." />
+<meta property="og:image" content="https://docs.bentoml.com/en/latest/_static/img/bentoml-banner.jpg" />
+<meta property="og:image:alt" content="bentomlx Documentation" />
+<meta name="description" content="… Single and distributed Services: Using a single BentoML Service in service.py is typically sufficient for most use cases. This approach is straightforward, easy to manage, and works well when you..." />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="intel-optimized-build" href="intel-optimized-build.html" /><link rel="prev" title="Feature Store" href="feature-store.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon-32x32.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+<script>
+window.Papercups = {
+    config: {
+        // Pass in your Papercups account token here after signing up
+        accountId: '25ad5fd9-293b-4e0f-9601-5b0cd7846b48',
+        token: '25ad5fd9-293b-4e0f-9601-5b0cd7846b48',
+        inbox: 'ac3ebd50-fc10-4299-9a1c-496841b49a6f',
+        title: 'Welcome to BentoML!',
+        subtitle: 'Ask us anything in the chat window below 😊',
+        // newMessagePlaceholder: 'Start typing...',
+        primaryColor: '#47AFD1',
+        // Optionally pass in a default greeting
+        greeting: "Hi there! How can I help you? If we couldn't get back to you in " +
+                "time, feel free to join our community on slack and post your " +
+                "question in the #support channel: https://l.bentoml.com/join-slack",
+        // Optionally pass in metadata to identify the customer
+        // customer: {
+        //   name: 'Test User',
+        //   email: 'test@test.com',
+        //   external_id: '123',
+        //   metadata: {version: 1, plan: 'premium'}, // Custom fields go here
+        // },
+        // Optionally specify the base URL
+        baseUrl: 'https://yatai-community-papercups.herokuapp.com',
+        // Add this if you want to require the customer to enter
+        // their email before being able to send you a message
+        requireEmailUpfront: true,
+        // Add this if you want to indicate when you/your agents
+        // are online or offline to your customers
+        showAgentAvailability: true,
+    },
+};
+</script>
+<script
+  type="text/javascript"
+  async
+  defer
+  src="https://app.papercups.io/widget.js"
+></script>
+
+        <title>intel-optimized-inter-service - bentomlx</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=c824535d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/micromodal.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=94a7ff06" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #3f3f3f;
+  --color-code-foreground: #dcdccc;
+  --color-brand-primary: #78c644 ;
+  --color-brand-content: #78c644 ;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #c9378a ;
+  --color-brand-content: #c9378a ;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #c9378a ;
+  --color-brand-content: #c9378a ;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NLGDMK5"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">bentomlx</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/img/logo-light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/img/logo-dark.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">bentomlx</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">bentomlx</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../get-started/index.html">Get started</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Get started</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../get-started/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../get-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../get-started/quickstart.html">Quickstart</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../use-cases/index.html">Use cases</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Use cases</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../use-cases/online-featurestore.html">online FeatureStore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../use-cases/offline-inference.html">Offline Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Guides</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="feature-store.html">Feature Store</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">intel-optimized-inter-service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel-optimized-build.html">intel-optimized-build</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/bentoml/BentoML/tree/main/examples">Examples</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/bentoml/bentoml/edit/main/docs/source/guides/intel-optimized-inter-service.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="intel-optimized-inter-service">
+<h1>intel-optimized-inter-service<a class="headerlink" href="#intel-optimized-inter-service" title="Link to this heading">#</a></h1>
+<p>…</p>
+<section id="single-and-distributed-services">
+<h2>Single and distributed Services<a class="headerlink" href="#single-and-distributed-services" title="Link to this heading">#</a></h2>
+<p>Using a single BentoML Service in <code class="docutils literal notranslate"><span class="pre">service.py</span></code> is typically sufficient for most use cases. This approach is straightforward, easy to manage, and works well when you only need to deploy a single model and the API logic is simple.</p>
+<p>In deployment, a BentoML Service run as processes in a container. If you define multiple Services, they run as processes in different containers. This distributed approach is useful when dealing with more complex scenarios, such as:</p>
+<ul class="simple">
+<li><p><strong>Pipelining CPU and GPU processing for better throughput</strong>: Distributing tasks between CPU and GPU can enhance throughput. Certain preprocessing or postprocessing tasks might be more efficiently handled by the CPU, while the GPU focuses on model inference.</p></li>
+<li><p><strong>Optimizing resource utilization and scalability</strong>: Distributed Services can run on different instances, allowing for independent scaling and efficient resource usage. This flexibility is important in handling varying loads and optimizing specific resource demands.</p></li>
+<li><p><strong>Asymmetrical GPU requirements</strong>: Different models might have varied GPU requirements. Distributing these models across Services helps you allocate resources more efficiently and cost-effectively.</p></li>
+<li><p><strong>Handling complex workflows</strong>: For applications involving intricate workflows, like sequential processing, parallel processing, or the composition of multiple models, you can create multiple Services to modularize these processes if necessary, improving maintainability and efficiency.</p></li>
+</ul>
+</section>
+<section id="interservice-communication">
+<h2>Interservice communication<a class="headerlink" href="#interservice-communication" title="Link to this heading">#</a></h2>
+<p>Distributed Services support complex, modular architectures through interservice communication. Different Services can interact with each other using the <code class="docutils literal notranslate"><span class="pre">bentoml.depends()</span></code> function. This allows for direct method calls between Services as if they were local class functions. Key features of interservice communication:</p>
+<ul class="simple">
+<li><p><strong>Automatic service discovery &amp; routing</strong>: When Services are deployed, BentoML handles the discovery of Services, routes requests appropriately, and manages payload serialization and deserialization.</p></li>
+<li><p><strong>Arbitrary dependency chains</strong>: Services can form dependency chains of any length, enabling intricate Service orchestration.</p></li>
+<li><p><strong>Diamond-shaped dependencies</strong>: Support a diamond dependency pattern, where multiple Services depend on a single downstream Service, for maximizing Service reuse.</p></li>
+</ul>
+<p>The following is an example of two distributed Services with different hardware requirements and one Service depends on another using <code class="docutils literal notranslate"><span class="pre">bentoml.depends()</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SDXLControlNetService</span></code>: A high-resource demanding Service, requiring GPU support for image generation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ControlNet</span></code>: A Service designed to handle incoming requests and route them appropriately. It calls a method of the <code class="docutils literal notranslate"><span class="pre">SDXLControlNetService</span></code> Service.</p></li>
+</ul>
+<p>This is the <code class="docutils literal notranslate"><span class="pre">service.py</span></code> file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">PIL</span>
+<span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">PIL_Image</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">diffusers</span> <span class="kn">import</span> <span class="n">StableDiffusionXLControlNetPipeline</span><span class="p">,</span> <span class="n">ControlNetModel</span><span class="p">,</span> <span class="n">AutoencoderKL</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="kn">import</span> <span class="nn">bentoml</span>
+
+<span class="n">CONTROLNET_MODEL_ID</span> <span class="o">=</span> <span class="s2">&quot;diffusers/controlnet-canny-sdxl-1.0&quot;</span>
+<span class="n">VAE_MODEL_ID</span> <span class="o">=</span> <span class="s2">&quot;madebyollin/sdxl-vae-fp16-fix&quot;</span>
+<span class="n">BASE_MODEL_ID</span> <span class="o">=</span> <span class="s2">&quot;stabilityai/stable-diffusion-xl-base-1.0&quot;</span>
+
+
+<span class="nd">@bentoml</span><span class="o">.</span><span class="n">service</span><span class="p">(</span>
+    <span class="n">traffic</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">},</span>
+    <span class="n">workers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">resources</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;gpu&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gpu_type&quot;</span><span class="p">:</span> <span class="s2">&quot;nvidia-l4&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="k">class</span> <span class="nc">SDXLControlNetService</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">float16</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">controlnet</span> <span class="o">=</span> <span class="n">ControlNetModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+            <span class="n">CONTROLNET_MODEL_ID</span><span class="p">,</span>
+            <span class="n">torch_dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vae</span> <span class="o">=</span> <span class="n">AutoencoderKL</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+            <span class="n">VAE_MODEL_ID</span><span class="p">,</span>
+            <span class="n">torch_dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipe</span> <span class="o">=</span> <span class="n">StableDiffusionXLControlNetPipeline</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+            <span class="n">BASE_MODEL_ID</span><span class="p">,</span>
+            <span class="n">controlnet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">controlnet</span><span class="p">,</span>
+            <span class="n">vae</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vae</span><span class="p">,</span>
+            <span class="n">torch_dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+
+    <span class="nd">@bentoml</span><span class="o">.</span><span class="n">api</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">],</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">to_tuple</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Params</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">negative_prompt</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">controlnet_conditioning_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">num_inference_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span>
+
+
+<span class="nd">@bentoml</span><span class="o">.</span><span class="n">service</span><span class="p">(</span>
+    <span class="n">traffic</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">},</span>
+    <span class="n">workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+<span class="n">resources</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cpu&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="k">class</span> <span class="nc">ControlNet</span><span class="p">:</span>
+    <span class="c1"># Pass the dependent Service class as an argument</span>
+    <span class="n">controlnet_service</span> <span class="o">=</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">SDXLControlNetService</span><span class="p">)</span>
+
+    <span class="nd">@bentoml</span><span class="o">.</span><span class="n">api</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">:</span> <span class="n">PIL_Image</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PIL_Image</span><span class="p">:</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">arr</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">arr</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">params_d</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">params_d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;prompt&quot;</span><span class="p">)</span>
+        <span class="c1"># Invok a class level function of another Service</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">controlnet_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+            <span class="n">prompt</span><span class="p">,</span>
+            <span class="n">arr</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">params_d</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find this example in the <a class="reference external" href="https://github.com/bentoml/BentoControlNet/">BentoControlNet</a> project.</p>
+</div>
+<p>To declare a dependency, you use the <code class="docutils literal notranslate"><span class="pre">bentoml.depends()</span></code> function by passing the dependent Service class as an argument. This creates a direct link between Services, facilitating easy method invocation. This example uses the following code to achieve this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ControlNet</span><span class="p">:</span>
+    <span class="n">controlnet_service</span> <span class="o">=</span> <span class="n">bentoml</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="n">SDXLControlNetService</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once a dependency is declared, invoking methods on the dependent Service is similar to calling a local method. In other words, Service <code class="docutils literal notranslate"><span class="pre">A</span></code> can call Service <code class="docutils literal notranslate"><span class="pre">B</span></code> as if Service <code class="docutils literal notranslate"><span class="pre">A</span></code> were invoking a class level function on Service <code class="docutils literal notranslate"><span class="pre">B</span></code>. This abstracts away the complexities of network communication, serialization, and deserialization. In this example, the Service <code class="docutils literal notranslate"><span class="pre">ControlNet</span></code> invokes the <code class="docutils literal notranslate"><span class="pre">generate</span></code> function of <code class="docutils literal notranslate"><span class="pre">SDXLControlNetService</span></code> as below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">controlnet_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span> <span class="o">**</span><span class="n">params_d</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">bentoml.depends()</span></code> is a recommended way for creating a BentoML project with distributed Services. It enhances modularity as you can develop reusable, loosely coupled Services that can be maintained and scaled independently.</p>
+</section>
+<section id="bentofile-yaml">
+<h2><code class="docutils literal notranslate"><span class="pre">bentofile.yaml</span></code><a class="headerlink" href="#bentofile-yaml" title="Link to this heading">#</a></h2>
+<p>For projects with multiple Services, you should reference the primary Service handling user requests for the <code class="docutils literal notranslate"><span class="pre">service</span></code> field in <code class="docutils literal notranslate"><span class="pre">bentofile.yaml</span></code>. For example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">service</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;service:ControlNet&quot;</span><span class="w"> </span><span class="c1">#ControlNet is the one that receives users&#39; requests</span>
+<span class="nt">labels</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bentoml-team</span>
+<span class="w">  </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gallery</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+</section>
+<section id="deploy-distributed-services">
+<h2>Deploy distributed Services<a class="headerlink" href="#deploy-distributed-services" title="Link to this heading">#</a></h2>
+<p>Deploying a project with distributed Services in BentoML is similar to deploying a single Service, with nuances in setting custom configurations.</p>
+<p>To set custom configurations for each, we recommend you use a separate configuration file and reference it in the BentoML CLI command or Python API for deployment.</p>
+<p>The following is an example file that defines some custom configurations for both Services in the BentoControlNet project. You set configurations of each Service in the <code class="docutils literal notranslate"><span class="pre">services</span></code> field. Refer to <span class="xref std std-doc">/bentocloud/how-tos/create-deployments</span> to see the available configuration fields.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># config-file.yaml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;deployment-name&quot;</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;This</span><span class="nv"> </span><span class="s">project</span><span class="nv"> </span><span class="s">creates</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">image</span><span class="nv"> </span><span class="s">generation</span><span class="nv"> </span><span class="s">application</span><span class="nv"> </span><span class="s">based</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">users&#39;</span><span class="nv"> </span><span class="s">requirements.&quot;</span>
+<span class="nt">envs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Optional. If you specify environment variables here, they will be applied to all Services</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENV_VAR_NAME&quot;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;env_var_value&quot;</span>
+<span class="nt">services</span><span class="p">:</span><span class="w"> </span><span class="c1"># Add the configs of each Service under this field</span>
+<span class="w">  </span><span class="nt">SDXLControlNetService</span><span class="p">:</span><span class="w"> </span><span class="c1"># Service one</span>
+<span class="w">    </span><span class="nt">instance_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gpu.l4.1&quot;</span>
+<span class="w">    </span><span class="nt">scaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">min_replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">envs</span><span class="p">:</span><span class="w"> </span><span class="c1"># Environment variables specific to Service one</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;BB&quot;</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bb&quot;</span>
+<span class="w">    </span><span class="nt">deployment_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;RollingUpdate&quot;</span>
+<span class="w">    </span><span class="nt">config_overrides</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">traffic</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># float in seconds</span>
+<span class="w">        </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">700</span>
+<span class="w">        </span><span class="nt">max_concurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">        </span><span class="nt">external_queue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;400m&quot;</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1Gi&quot;</span>
+<span class="w">      </span><span class="nt">workers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">ControlNet</span><span class="p">:</span><span class="w"> </span><span class="c1"># Service two</span>
+<span class="w">    </span><span class="nt">instance_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cpu.1&quot;</span>
+<span class="w">    </span><span class="nt">scaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">      </span><span class="nt">min_replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+<p>To deploy this Service to <span class="xref std std-doc">BentoCloud</span>, you can choose either the BentoML CLI or Python API:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-0">
+BentoML CLI</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bentoml<span class="w"> </span>deploy<span class="w"> </span>.<span class="w"> </span>-f<span class="w"> </span>config-file.yaml
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+</input><label class="sd-tab-label" for="sd-tab-item-1">
+Python API</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bentoml</span>
+<span class="n">bentoml</span><span class="o">.</span><span class="n">deployment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">bento</span> <span class="o">=</span> <span class="s2">&quot;./path_to_your_project&quot;</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="s2">&quot;config-file.yaml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="intel-optimized-build.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">intel-optimized-build</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="feature-store.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Feature Store</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, kimsoungryoul
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fab fa-github" href="https://github.com/bentoml" aria-label="GitHub">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-linkedin" href="https://www.linkedin.com/company/bentoml/" aria-label="LinkedIn">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-twitter" href="https://twitter.com/bentomlai" aria-label="Twitter">&nbsp;&nbsp;</a>
+              <a class="muted-link fab fa-slack" href="https://l.bentoml.com/join-slack" aria-label="Slack">&nbsp;&nbsp;</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">intel-optimized-inter-service</a><ul>
+<li><a class="reference internal" href="#single-and-distributed-services">Single and distributed Services</a></li>
+<li><a class="reference internal" href="#interservice-communication">Interservice communication</a></li>
+<li><a class="reference internal" href="#bentofile-yaml"><code class="docutils literal notranslate"><span class="pre">bentofile.yaml</span></code></a></li>
+<li><a class="reference internal" href="#deploy-distributed-services">Deploy distributed Services</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f42a5055"></script>
+    <script src="../_static/tabs.js?v=3ee01567"></script>
+    <script src="../_static/js/hoverxref.js"></script>
+    <script src="../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../_static/js/micromodal.min.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/custom.js?v=d02a1360"></script>
+    </body>
+</html>
